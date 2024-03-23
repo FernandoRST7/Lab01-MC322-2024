@@ -32,7 +32,7 @@ public class Main {
 		//teste de carta
 		System.out.println("---Teste de CartaSorte---");
 		//no caso essa n move e não tem ação específica, coloquei aquele texto de role play
-		CartaSorte carta = new CartaSorte(1, "Recebeu Herança!", 0, 1, 200000, 
+		CartaSorte carta = new CartaSorte(1, "Recebeu Herança!", 0, 1, 200000.00f, 
 				"sua tia rica morreu e voce recebeu a herança", true, "sem restrições");
 		/*System.out.println(carta.getAcaoEspecifica());
 		System.out.println(carta.getEfeito());

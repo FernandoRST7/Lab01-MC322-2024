@@ -3,16 +3,16 @@ public class CartaSorte {
 	private String nome;
 	private int movimento; //0 se não movimentar;
 	private int efeito; //-1:neg, 0:neu, 1:pos;
-	private int valor; //valor>0: recebimento, valor<0: pagamento;
+	private float valor; //valor>0: recebimento, valor<0: pagamento;
 	private String acaoEspecifica; //descreve a ação;
-	private boolean usoImediato; //true usa false não
+	private boolean usoImediato; //true usa false não, no pdf fala pra colocar int, mas acho boolean melhor, tmj
 	private String usoEspecifico; //descreve:
 	/*as strings de especificidade com explicação em texto ainda
 	 * preciso pensar melhor se vai ser texto msm, pq parece
 	 * um tanti impratico*/
 	
 	//Construtor
-	public CartaSorte (int id, String nome, int movimento, int efeito, int valor, String acaoEspecifica, boolean usoImediato, String usoEspecifico) {
+	public CartaSorte (int id, String nome, int movimento, int efeito, float valor, String acaoEspecifica, boolean usoImediato, String usoEspecifico) {
 		this.id = id;
 		this.nome = nome;
 		this.movimento = movimento;
@@ -56,11 +56,11 @@ public class CartaSorte {
 		this.efeito = efeito;
 	}
 	
-	public int getValor() {
+	public float getValor() {
 		return valor;
 	}
 	
-	public void setValor(int valor) {
+	public void setValor(float valor) {
 		this.valor = valor;
 	}
 	
