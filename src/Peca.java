@@ -29,4 +29,11 @@ public class Peca {
 	public int getPosicao() {
 		return posicao;
 	}
+	
+	@Override
+    public String toString() {
+        return "Dados do Jogador:" + '\n' +
+                "[cor = " + this.cor + '\n' +
+                "posição = " + this.posicao + '\n' + ']';
+	}
 }

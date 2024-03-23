@@ -25,8 +25,9 @@ public class Main {
 		//teste de peca
 		System.out.println("---Teste de Peca---");
 		Peca peca = new Peca("preto", 0);
-		System.out.println(peca.getCor());
-		System.out.println(peca.getPosicao());
+		/*System.out.println(peca.getCor());
+		System.out.println(peca.getPosicao());*/
+		System.out.println(peca.toString());
 		System.out.println();
 		
 		//teste de carta
