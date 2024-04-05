@@ -6,7 +6,14 @@ public class Main {
 		Jogador jogador = new Jogador("Fernando", "801.754.450-28", "nokifa2208@ikumaru.com", "https://instagram/foto.com");
 		
 		//verifica o cpf
-		if (jogador.validaCPF()) { 
+		/*if (jogador.validaCPF()) { 
+			System.out.println("CPF válido;");
+		} else {
+			System.out.println("CPF inválido;");
+		}*/
+		
+		//versão com a biblioteca dedicada:
+		if (Biblioteca.validaCPF(jogador.getCpf())) { 
 			System.out.println("CPF válido;");
 		} else {
 			System.out.println("CPF inválido;");
@@ -14,7 +21,7 @@ public class Main {
 		
 		//verifica o email
 		
-		if (jogador.validaEmail()) {
+		if (Biblioteca.validaEmail(jogador.getEmail())) {
 			System.out.println("email válido;\n");
 		} else {
 			System.out.println("email inválido;\n");
