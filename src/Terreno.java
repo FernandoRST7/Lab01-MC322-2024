@@ -5,8 +5,8 @@ public class Terreno extends Propriedade{
 	private int valorHotel;
 	private boolean hotel; //se tem ou n hotel (max 1 por propriedade)
 	
-	public Terreno(String nome, String proprietario, int preco, int valorCasa, int valorHotel) {
-		super(nome, proprietario, preco);
+	public Terreno(String nome, int preco, int valorCasa, int valorHotel) {
+		super(nome, preco);
 		this.numeroCasas = 0; //comeca com 0
 		this.valorCasa = valorCasa; //permite cada propriedade a casa ter um valor diferente
 		this.valorHotel = valorHotel; //msm ideia
@@ -53,7 +53,7 @@ public class Terreno extends Propriedade{
 	public void setHotel(int quantidade) {
 		if (quantidade > 0) this.hotel = true;
 		else this.hotel = false;
-	}
+	} //se tiver mais q 0 hoteis significa q tem hotel
 	
 	
 	//metodos
@@ -81,6 +81,35 @@ public class Terreno extends Propriedade{
 	}
 	
 	public int calcularAluguel() {
-		return 0; //vou fzr ainda
+		/*int abc = 0;
+		abc = this.getAluguel();*/
+		int aluguel = this.getPreco()/100;
+		
+		if (this.hotel) aluguel += 2*this.valorHotel; //n sei se realmente eh assim q vai funcionar, mas por enquanto vai ser
+		else aluguel += (this.valorCasa*2*this.numeroCasas); //por casa ta valorizando d+, Q isso (Hotel tbm)
+		
+		return aluguel; //vou fzr ainda
 	}
+	
+	@Override
+    public String toString() {
+		String id;
+		if (this.getId() <= 0) id = "Sem proprietário";
+		else id = Integer.toString(this.getId());
+		
+		String hotel;
+		if (this.hotel) hotel = "Sim";
+		else hotel = "Não";
+		
+        return "Dados do Terreno:" + '\n' + '\n' +
+                "[nome = " + this.getNome() + '\n' +
+                "proprietário = " + this.getProprietario() + '\n' +
+                "preço = " + this.getPreco() + '\n' +
+                "valor do aluguel = " + this.calcularAluguel() + '\n' +
+                "id do proprietário = " + id + '\n' +
+                "Número de Casas = " + this.numeroCasas + '\n' +
+                "Valor de uma Casa = " + this.valorCasa + '\n' +
+                "Valor de um Hotel = " + this.valorHotel + '\n' +
+                "Tem Hotel? = " + hotel + ']';
+    }
 }

@@ -31,9 +31,12 @@ public class Jogador {
 	}
 	
 	public void setDinheiro (int valor) {
+		this.dinheiro = valor;
+	}
+	
+	public void addDinheiro (int valor) {
 		//se quiser debitar, passar um valor negativo
 		this.dinheiro += valor;
-		
 	}
 	
 	public String getNome () {
@@ -76,7 +79,7 @@ public class Jogador {
 	
 	@Override
     public String toString() {
-        return "Dados do Jogador:" + '\n' +
+        return "Dados do Jogador:" + '\n' + '\n' +
                 "[nome = " + this.nome + '\n' +
                 "cpf = " + this.cpf + '\n' +
                 "email = " + this.email + '\n' +

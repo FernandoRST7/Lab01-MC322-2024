@@ -1,28 +1,28 @@
 
 public class Propriedade {
-	private int id;
-	private static int id_count = 0;
+	private int id; //do jogador proprietario -> obs1 
+	//private static int id_count = 0; -> seria o id da propriedade, mas mudei de ideia
 	private String nome;
 	private String proprietario;
 	private int preco;
-	private Float aluguel;
+	private int aluguel; /*no pdf falava pra usar float em uma parte, mas como todos os outros valores relacionados
+	 						a transacoes estavam em int, resolvi usar int por enquanto*/
 	
 	//construtor
-	public Propriedade (String nome, String proprietario, int preco) {
+	public Propriedade (String nome, int preco) {
 		this.nome = nome;
-		this.proprietario = proprietario;
+		this.proprietario = "Sem proprietário"; //ao ser criada ainda n tem dono
 		this.preco = preco;
-		//talvez o id seja do proprietario, ai as 2 linhas a seguir serao apagadas, n entendi direito
-		id_count++;
-		this.id = id_count;
+		//this.aluguel = this.calcularAluguel(); n entendi muito o proposito de ter uma variavel do aluguel
+		this.id = 0; //ao ser criada ainda n tem id
 	}
 		
 	//Getters e setters
 	public int getId () {
-		return id;
+		return this.id;
 	}
 	
-	public void setId(int id) { //n entendi direito pra q serve, o id é do proprietario, e n da propriedade?
+	public void setId(int id) { //n entendi direito pra q serve, conclusão: o id é do proprietario, e n da propriedade, obs1
 		this.id = id;
 	}
 	
@@ -52,9 +52,25 @@ public class Propriedade {
 		this.preco = preco;
 	}
 	
-	
-	public int calcularAluguel() {
+	public int getAluguel() {
+		return aluguel;
+	} //fiz isso pra acessar, mas n deu certo, ent mudei o aluguel pra protected
 		
-		return 0; //se n sei q tipo de propriedade é, n sei como calcular o aluguel
+	public int calcularAluguel() {
+		return this.preco/100; //1% do valor do imóvel
 	}
+	
+	@Override
+    public String toString() {
+		String id;
+		if (this.getId() <= 0) id = "Sem proprietário";
+		else id = Integer.toString(this.id);
+		
+        return "Dados da Propriedade:" + '\n' + '\n' +
+                "[nome = " + this.nome + '\n' +
+                "proprietário = " + this.proprietario + '\n' +
+                "preço = " + this.preco + '\n' +
+                "valor do aluguel = " + this.calcularAluguel() + '\n' +
+                "id do proprietário = " + id + ']';
+    }
 }
