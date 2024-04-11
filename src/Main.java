@@ -130,6 +130,24 @@ public class Main {
 		//Mojo Dojo Casa House confiscada
 		tabuleiro.rmvPropriedade(propriedade);
 		
+		//comprando casas:
+		if (jogador2.getDinheiro() > terreno.getValorCasa()) {
+			terreno.addNumeroCasas(1);
+			jogador2.addDinheiro(-1*terreno.getValorCasa());
+		}
+		
+		if (jogador2.getDinheiro() > 3*terreno.getValorCasa()) {
+			terreno.addNumeroCasas(3);
+			jogador2.addDinheiro(-3*terreno.getValorCasa());
+		}
+		
+		//comprando hotel
+		if ((jogador2.getDinheiro() > terreno.getValorHotel()) &&
+				(terreno.getNumeroCasas() == 4) && (!terreno.getHotel())){
+			terreno.setNumeroCasas(0);
+			terreno.setHotel(1);
+		}
+		
 		System.out.println("---Teste de Tabuleiro---");
 		System.out.println("Numero de jogadores atuais: " + tabuleiro.getNumeroJogadores());
 		System.out.println(tabuleiro.jogadores.toString() + "\n");
