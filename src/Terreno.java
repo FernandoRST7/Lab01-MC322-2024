@@ -57,6 +57,17 @@ public class Terreno extends Propriedade{
 	
 	
 	//metodos
+	public boolean comprarCasa(Jogador jogador, int n) {
+		if((this.getNumeroCasas() + n) < 4) {
+
+			if (jogador.getDinheiro() >= n*this.getValorCasa()) {
+				jogador.addDinheiro(-(n*this.getValorCasa()));
+				this.addNumeroCasas(n);
+				return true;
+			} else return false;
+		} else return false;
+	}
+	
 	public boolean comprarCasa(int dinheiro) {
 		if (dinheiro >= this.valorCasa) return true;
 		/*ai a ideia seria contar o numero de casas e debitar o 
@@ -66,6 +77,17 @@ public class Terreno extends Propriedade{
 		 * 		jogador.setDinheiro(-terreno.getValorCasa());
 		 * }*/
 		else return false;
+	}
+	
+	public boolean comprarHotel(Jogador jogador) {
+		if(!this.getHotel()) {
+
+			if (jogador.getDinheiro() >= this.getValorHotel()) {
+				jogador.addDinheiro(-(this.getValorHotel()));
+				this.setHotel(1);
+				return true;
+			} else return false;
+		} else return false;
 	}
 	
 	public boolean comprarHotel(int dinheiro) {
