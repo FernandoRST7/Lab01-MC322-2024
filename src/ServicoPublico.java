@@ -1,7 +1,11 @@
 public class ServicoPublico extends Propriedade {
 	
-	ServicoPublico(String nome, int preco) {
-		super(nome, preco);
+	ServicoPublico(String nome, int preco, String descricao) {
+		super(nome, preco, descricao);
+	}
+	
+	ServicoPublico(String nome, int preco, String descricao, Jogador jogador) {
+		super(nome, preco, descricao, jogador);
 	}
 	
 	public int calcularAluguel(int dado) {
@@ -19,12 +23,16 @@ public class ServicoPublico extends Propriedade {
 		if (this.getId() <= 0) id = "Sem proprietário";
 		else id = Integer.toString(this.getId());
 		
-        return "Dados da Estação:" + '\n' + '\n' +
-                "[nome = " + this.getNome() + '\n' +
-                "proprietário = " + this.getProprietario() + '\n' +
+		String dono;
+		if (this.getDono() == null) dono = "Sem dono";
+		else dono = this.getDono().getNome();
+		
+        return "ServiçoPúblico:" + '\n' +
+                "nome = " + this.getNome() + '\n' +
+                "proprietário = " + dono + '\n' +
                 "preço = " + this.getPreco() + '\n' +
                 "valor do aluguel = " + this.calcularAluguel() + '\n' +
-                "id do proprietário = " + id + ']';
+                "id da carta = " + id + '\n' + '\n';
     }
 }
 

@@ -1,33 +1,34 @@
 
-public class Propriedade {
-	private int id; //do jogador proprietario -> obs1 
-	//private static int id_count = 0; -> seria o id da propriedade, mas mudei de ideia
+public class Propriedade extends Carta{
 	private String nome;
-	private String proprietario;
 	private int preco;
 	private int aluguel; /*no pdf falava pra usar float em uma parte, mas como todos os outros valores relacionados
 	 						a transacoes estavam em int, resolvi usar int por enquanto*/
 	
 	//construtor
-	public Propriedade (String nome, int preco) {
+	public Propriedade (String nome, int preco, String descricao) {
+		super(descricao);
 		this.nome = nome;
-		this.proprietario = "Sem proprietário"; //ao ser criada ainda n tem dono
 		this.preco = preco;
 		//this.aluguel = this.calcularAluguel(); n entendi muito o proposito de ter uma variavel do aluguel
-		this.id = 0; //ao ser criada ainda n tem id
+	}
+	
+	public Propriedade (String nome, int preco, String descricao, Jogador jogador) {
+		super(descricao, jogador);
+		this.nome = nome;
+		this.preco = preco;
 	}
 		
 	//Getters e setters
-	public int getId () {
-		return this.id;
-	}
 	
-	public void setId(int id) { //n entendi direito pra q serve, conclusão: o id é do proprietario, e n da propriedade, obs1
-		this.id = id;
-	}
+		/*public int getId() {
+			return id;
+		}
+		usa do da superclasse*/
 	
 	public String getNome() {
-		return nome;
+		if (nome == null) return "sem dono";
+		else return nome;
 	}
 	
 	public void setNome(String nome) {
@@ -35,13 +36,16 @@ public class Propriedade {
 		this.nome = nome;
 	}
 		
-	public String getProprietario() {
-		return proprietario;
+	/*public Jogador getProprietario() {
+		return this.getDono();
 	}
+	isso aqui mudou pra getDono da superclasse*/
 	
-	public void setProprietario(String proprietario) {
+	/* 
+	 	public void setProprietario(String proprietario) {
 		this.proprietario = proprietario;
 	}
+	isso aqui mudou pra setDono da superclasse*/
 	
 	public int getPreco() {
 		return preco;
@@ -66,11 +70,15 @@ public class Propriedade {
 		if (this.getId() <= 0) id = "Sem proprietário";
 		else id = Integer.toString(this.id);
 		
-        return "Dados da Propriedade:" + '\n' + '\n' +
-                "[nome = " + this.nome + '\n' +
-                "proprietário = " + this.proprietario + '\n' +
+		String dono;
+		if (this.getDono() == null) dono = "Sem dono";
+		else dono = this.getDono().getNome();
+		
+        return "Propriedade:" + '\n' +
+                "nome = " + this.nome + '\n' +
+                "proprietário = " + dono + '\n' +
                 "preço = " + this.preco + '\n' +
                 "valor do aluguel = " + this.calcularAluguel() + '\n' +
-                "id do proprietário = " + id + ']';
+                "id da carta = " + id + + '\n' + '\n';
     }
 }

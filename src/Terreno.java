@@ -5,8 +5,8 @@ public class Terreno extends Propriedade{
 	private int valorHotel;
 	private boolean hotel; //se tem ou n hotel (max 1 por propriedade)
 	
-	public Terreno(String nome, int preco, int valorCasa, int valorHotel) {
-		super(nome, preco);
+	public Terreno(String nome, int preco, int valorCasa, int valorHotel, String descricao) {
+		super(nome, preco, descricao);
 		this.numeroCasas = 0; //comeca com 0
 		this.valorCasa = valorCasa; //permite cada propriedade a casa ter um valor diferente
 		this.valorHotel = valorHotel; //msm ideia
@@ -123,15 +123,19 @@ public class Terreno extends Propriedade{
 		if (this.hotel) hotel = "Sim";
 		else hotel = "Não";
 		
-        return "Dados do Terreno:" + '\n' + '\n' +
-                "[nome = " + this.getNome() + '\n' +
-                "proprietário = " + this.getProprietario() + '\n' +
+		String dono;
+		if (this.getDono() == null) dono = "Sem dono";
+		else dono = this.getDono().getNome();
+		
+        return "Terreno:" + '\n' + 
+                "nome = " + this.getNome() + '\n' +
+                "proprietário = " + dono + '\n' +
                 "preço = " + this.getPreco() + '\n' +
                 "valor do aluguel = " + this.calcularAluguel() + '\n' +
-                "id do proprietário = " + id + '\n' +
+                "id da carta = " + id + '\n' +
                 "Número de Casas = " + this.numeroCasas + '\n' +
                 "Valor de uma Casa = " + this.valorCasa + '\n' +
                 "Valor de um Hotel = " + this.valorHotel + '\n' +
-                "Tem Hotel? = " + hotel + ']';
+                "Tem Hotel? = " + hotel + '\n' + '\n';
     }
 }

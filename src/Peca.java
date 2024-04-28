@@ -3,12 +3,12 @@ public class Peca {
 	
 	//attributs
 	private String cor;
-	private int posicao = 0;	
+	private int posicao;	
 	
 	//construtor
-	public Peca(String cor, int posicao) {
+	public Peca(String cor) {
 		this.cor = cor;
-		this.posicao = posicao;
+		this.posicao = 0;
 	}
 	
 	//setter
@@ -32,8 +32,7 @@ public class Peca {
 	
 	@Override
     public String toString() {
-        return "Dados do Jogador:" + '\n' +
-                "[cor = " + this.cor + '\n' +
-                "posição = " + this.posicao + '\n' + ']';
+        return  "cor = " + this.cor + ", " +
+                "posição = " + this.posicao;
 	}
 }

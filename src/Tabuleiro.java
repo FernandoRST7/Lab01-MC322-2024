@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 public class Tabuleiro {
-	public ArrayList<Jogador> jogadores; //no pdf era ArrayList<int>, mas n faz muito sentido isso pra mim
-	public ArrayList<Propriedade> propriedades;
+	private ArrayList<Jogador> jogadores;
+	private ArrayList<Propriedade> propriedades;
 	//public static int jogando = 0; -> só dar.size
 	//public static int existindo = 0;
 	
@@ -16,6 +16,7 @@ public class Tabuleiro {
 		return this.jogadores.size();
 	}
 	
+	
 	public int getNumeroPropriedades() {
 		return this.propriedades.size();
 	}
@@ -26,11 +27,19 @@ public class Tabuleiro {
 		//jogando++;
 	}
 	
+	public ArrayList<Jogador> getJogadores() {
+		return jogadores;
+	}
+	
+	public ArrayList<Propriedade> getPropriedades() {
+		return propriedades;
+	}
+	
+	//outros
 	public void rmvJogador(Jogador jogador) {
 		jogadores.remove(jogador);
 		//jogando--;
 	}
-	
 	
 	public void addPropriedade(Propriedade propriedade) {
 		propriedades.add(propriedade);
@@ -38,5 +47,17 @@ public class Tabuleiro {
 	
 	public void rmvPropriedade(Propriedade propriedade) {
 		propriedades.remove(propriedade);
+	}
+	
+	public void printJogadores() {
+		for (int i = 0; i < jogadores.size(); i++) {
+			System.out.println(jogadores.get(i).getNome());
+		}
+	}
+	
+	public void printPropriedades() {
+		for (int i = 0; i < propriedades.size(); i++) {
+			System.out.println(propriedades.get(i).getNome());
+		}
 	}
 }

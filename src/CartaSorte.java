@@ -1,36 +1,48 @@
-public class CartaSorte {
-	private int id;
+public class CartaSorte extends Carta {
 	private String nome;
 	private int movimento; //0 se não movimentar;
 	private int efeito; //-1:neg, 0:neu, 1:pos;
 	private float valor; //valor>0: recebimento, valor<0: pagamento;
-	private String acaoEspecifica; //descreve a ação;
-	private boolean usoImediato; //true usa false não, no pdf fala pra colocar int, mas acho boolean melhor, tmj
-	private String usoEspecifico; //descreve:
+	private String acao; //descreve a ação; (tava como acaoEspecifica
+	private boolean tempo; //true usa false não, no pdf fala pra colocar int, mas acho boolean melhor, tmj (tava como usoImediato)
+	private String restricao; //descreve: (tava como usoEspecifico antes)
 	/*as strings de especificidade com explicação em texto ainda
 	 * preciso pensar melhor se vai ser texto msm, pq parece
-	 * um tanti impratico*/
+	 * um tanto impratico*/
 	
 	//Construtor
-	public CartaSorte (int id, String nome, int movimento, int efeito, float valor, String acaoEspecifica, boolean usoImediato, String usoEspecifico) {
-		this.id = id;
+	public CartaSorte (String nome, int movimento, int efeito, float valor, String acao, 
+						boolean tempo, String restricao, String descricao) {
+		super(descricao);
 		this.nome = nome;
 		this.movimento = movimento;
 		this.efeito = efeito;
 		this.valor = valor;
-		this.acaoEspecifica = acaoEspecifica;
-		this.usoImediato = usoImediato;
-		this.usoEspecifico = usoEspecifico;
+		this.acao = acao;
+		this.tempo = tempo;
+		this.restricao = restricao;
 	}
+	
+	//Construtor
+		public CartaSorte (String nome, int movimento, int efeito, float valor, String acao, 
+							boolean tempo, String restricao,
+							String descricao, Jogador jogador) {
+			super(descricao, jogador);
+			this.nome = nome;
+			this.movimento = movimento;
+			this.efeito = efeito;
+			this.valor = valor;
+			this.acao = acao;
+			this.tempo = tempo;
+			this.restricao = restricao;
+		}
 	
 	//Getters e setters
-	public int getId() {
+	
+	/*public int getId() {
 		return id;
 	}
-	
-	public void setId(int id) {
-		this.id = id;
-	}
+	usa o da superclasse*/
 	
 	public String getNome() {
 		return nome;
@@ -64,28 +76,28 @@ public class CartaSorte {
 		this.valor = valor;
 	}
 	
-	public String getAcaoEspecifica() {
-		return acaoEspecifica;
+	public String getAcao() {
+		return acao;
 	}
 	
-	public void setAcaoEspecufifica(String acaoEspecifica) {
-		this.acaoEspecifica = acaoEspecifica;
+	public void setAcao(String acao) {
+		this.acao = acao;
 	}
 	
-	public boolean getUsoImediato() {
-		return usoImediato;
+	public boolean getTempo() {
+		return tempo;
 	}
 	
-	public void setUsoImediato(boolean usoImediato) {
-		this.usoImediato = usoImediato;
+	public void setTempo(boolean tempo) {
+		this.tempo = tempo;
 	}
 	
-	public String getUsoEspecifico() {
-		return usoEspecifico;
+	public String getRestricao() {
+		return restricao;
 	}
 	
-	public void setUsoEspecufifico(String usoEspecifico) {
-		this.usoEspecifico = usoEspecifico;
+	public void setRestricao(String restricao) {
+		this.restricao = restricao;
 	}
 	
 	@Override
@@ -96,8 +108,8 @@ public class CartaSorte {
                 "movimento = " + this.movimento + '\n' +
                 "efeito = " + this.efeito + '\n' +
                 "valor = " + this.valor + '\n' +
-                "ação específica = " + this.acaoEspecifica + '\n' +
-                "uso imediato = " + this.usoImediato + '\n' +
-                "uso específico = " + this.usoEspecifico + ']';
+                "ação específica = " + this.acao + '\n' +
+                "uso imediato = " + this.tempo + '\n' +
+                "uso específico = " + this.restricao + ']';
 	}
 }
