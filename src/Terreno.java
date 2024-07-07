@@ -11,6 +11,7 @@ public class Terreno extends Propriedade{
 		this.valorCasa = valorCasa; //permite cada propriedade a casa ter um valor diferente
 		this.valorHotel = valorHotel; //msm ideia
 		this.hotel = false; //a principio comeca sem hotel
+		this.tipo = TipoCarta.TERRENO;
 	}
 	
 	//Getters and setters
@@ -57,50 +58,32 @@ public class Terreno extends Propriedade{
 	
 	
 	//metodos
-	public boolean comprarCasa(Jogador jogador, int n) {
-		if((this.getNumeroCasas() + n) < 4) {
-
-			if (jogador.getDinheiro() >= n*this.getValorCasa()) {
-				jogador.addDinheiro(-(n*this.getValorCasa()));
-				this.addNumeroCasas(n);
-				return true;
-			} else return false;
-		} else return false;
+	public void comprarCasa(Jogador jogador) throws SaldoNegativo {
+		//se n puder comprar casa, seja por estar no maximo de casas ou por ter hotel nem entra aqui
+		
+			if (jogador.getDinheiro() >= this.valorCasa) {
+				jogador.addDinheiro(-this.valorCasa);
+				this.addNumeroCasas(1);
+				System.out.println("Casa adquirida com sucesso!");
+			} else { //se for negativo
+				throw new SaldoNegativo("Saldo Insuficiente.");
+			}
+		
 	}
 	
-	public boolean comprarCasa(int dinheiro) {
-		if (dinheiro >= this.valorCasa) return true;
-		/*ai a ideia seria contar o numero de casas e debitar o 
-		 * dinheiro fora desse metodo, tipo:
-		 * if (terreno.comprarCasa(jogador.dinheiro) && !(terreno.getNumeroCasas() < 4)) { //ter dinheiro e menos q 4 casas
-		 * 		terreno.addNumeroCasas(1);
-		 * 		jogador.setDinheiro(-terreno.getValorCasa());
-		 * }*/
-		else return false;
-	}
+	public void comprarHotel(Jogador jogador) throws SaldoNegativo{
+		//se n puder comprar hotel, seja por n ter 4 casas ou por ja ter um hotel nem entra aqui
 	
-	public boolean comprarHotel(Jogador jogador) {
-		if(!this.getHotel()) {
-
 			if (jogador.getDinheiro() >= this.getValorHotel()) {
 				jogador.addDinheiro(-(this.getValorHotel()));
 				this.setHotel(1);
-				return true;
-			} else return false;
-		} else return false;
+				System.out.println("Hotel adquirido com sucesso!");
+			} else {
+				throw new SaldoNegativo("Saldo insuficiente.");
+			}
+		
 	}
 	
-	public boolean comprarHotel(int dinheiro) {
-		if (dinheiro >= this.valorHotel) return true;
-		/*ai a ideia seria contar o numero de casas/hoteis e debitar o 
-		 * dinheiro fora desse metodo, tipo:
-		 * if (terreno.comprarHotel(jogador.dinheiro) && !terreno.getHotel()) { //se tiver dinheiro e n tiver 1 hotel
-		 * 		terreno.setNumeroCasas(0);
-		 * 		terreno.setHotel(1);
-		 * 		jogador.setDinheiro(-terreno.getValorHotel());
-		 * }*/
-		else return false;
-	}
 	
 	public int calcularAluguel() {
 		/*int abc = 0;

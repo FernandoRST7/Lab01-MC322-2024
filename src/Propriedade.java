@@ -4,6 +4,8 @@ public class Propriedade extends Carta{
 	private int preco;
 	private int aluguel; /*no pdf falava pra usar float em uma parte, mas como todos os outros valores relacionados
 	 						a transacoes estavam em int, resolvi usar int por enquanto*/
+	//private Jogador dono; --> todas as minhas cartas tem isso já
+	
 	
 	//construtor
 	public Propriedade (String nome, int preco, String descricao) {
@@ -11,13 +13,16 @@ public class Propriedade extends Carta{
 		this.nome = nome;
 		this.preco = preco;
 		//this.aluguel = this.calcularAluguel(); n entendi muito o proposito de ter uma variavel do aluguel
+		this.tipo = TipoCarta.PROPRIEDADE;
 	}
 	
 	public Propriedade (String nome, int preco, String descricao, Jogador jogador) {
 		super(descricao, jogador);
 		this.nome = nome;
 		this.preco = preco;
+		this.tipo = TipoCarta.PROPRIEDADE;
 	}
+
 		
 	//Getters e setters
 	
@@ -62,6 +67,10 @@ public class Propriedade extends Carta{
 		
 	public int calcularAluguel() {
 		return this.preco/100; //1% do valor do imóvel
+	}
+	
+	public TipoCarta getTipo() {
+		return tipo;
 	}
 	
 	@Override

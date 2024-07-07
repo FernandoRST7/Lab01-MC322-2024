@@ -1,272 +1,289 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
 
-	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in);
-		System.out.println("digite o modo de execução: (automatico/manual)");
-		String tipo = scanner.nextLine();
+    public static void main(String[] args) {
+        Tabuleiro tabuleiro = new Tabuleiro();
+        // Adiciona as cartas de sorte ou reve automaticamente
+        // Adiciona as propriedades automaticamente
 
-		if (tipo.equals("automatico")) {
-			
-			System.out.println("---Teste de Jogador---");
-			Jogador jogador1 = new Jogador("Fernando", "801.754.450-28", "nokifa2208@ikumaru.com", "https://instagram/foto.com", "preto");
-			
-			System.out.println(jogador1.toString());
-			System.out.println("");
-			
-			//versão com a biblioteca dedicada:
-			//verifica cpf
-			if (Biblioteca.validaCPF(jogador1.getCpf())) { 
-				System.out.println("CPF válido;");
-			} else {
-				System.out.println("CPF inválido;");
-			}
-			
-			//verifica o email
-			if (Biblioteca.validaEmail(jogador1.getEmail())) {
-				System.out.println("email válido;\n");
-			} else {
-				System.out.println("email inválido;\n");
-			}
-			
-			//teste de peca
-			/*System.out.println("---Teste de Peca---");
-			Peca peca = new Peca("preto");
-			System.out.println(peca.toString());
-			System.out.println();*/
-			
-			//teste de carta
-			System.out.println("---Teste de CartaSorte---");
-			//no caso essa n move e não tem ação específica, coloquei aquele texto de role play
-			CartaSorte carta = new CartaSorte("Recebeu Herança!", 0, 1, 200000.00f, 
-					"sua tia rica morreu e voce recebeu a herança", true, "sem restrições", "uma carta que da dinheiro ao jogador");
-			System.out.println(carta.toString());
-			System.out.println();
-			
-			System.out.println("---Teste de Propriedades---");
-			//instanciação de uma propriedade geral
-			Propriedade propriedade = new Propriedade("Mojo Dojo Casa House", 3000000, "A melhor propriedadae possivel");
-			System.out.println(propriedade.toString());
-			System.out.println();
-	
-			//instanciacao da estacao
-			Estacao estacao = new Estacao("Liberdade", 500000, "carta de estação");
-			System.out.println(estacao.toString());
-			System.out.println();
-			
-			//instanciacao ddo terreno
-			Terreno terreno = new Terreno("Céu Azul", 200000, 30000, 150000, "carta de terreno");
-			System.out.println(terreno.toString());
-			System.out.println();
-			
-			//instanciacao da estacao
-			ServicoPublico servicoPublico = new ServicoPublico("Estação de Bombeiros", 300000, "carta de propriedade");
-			System.out.println(servicoPublico.toString());
-			System.out.println();
-			
-			//parte do tabuleiro
-			Tabuleiro tabuleiro = new Tabuleiro();
-			Jogador jogador2 = new Jogador("Eric", "469.369.169-96", "aspas@prodigy-agency.gg", "https://youtu.be/dQw4w9WgXcQ?si=IQWm2jD_LDtZae7w", "azul");
-			
-			tabuleiro.addJogador(jogador1);
-			tabuleiro.addJogador(jogador2);
-			
-			tabuleiro.addPropriedade(propriedade);
-			tabuleiro.addPropriedade(estacao);
-			tabuleiro.addPropriedade(terreno);
-			tabuleiro.addPropriedade(servicoPublico);
-			
-			//jogador1 vai comprar a propriedade e a estacao
-			//se tiver a grana e a propriedade n tiver dono
-			if (jogador1.getDinheiro()>propriedade.getPreco() && propriedade.getId() == 0) {
-				jogador1.addDinheiro(-propriedade.getPreco()); //debita
-				propriedade.setDono(jogador1); //registra o dono
-			}
-			//System.out.println(jogador1.toString());
-			//System.out.println(propriedade.toString());
-			if (propriedade.getDono() == null) {
-			System.out.println("n comprou, a Mojo Dojo Casa House n é pra qualquer um\n");
-			//no caso n comprou pq n tinha dinheiro, a Mojo Dojo Casa House n é pra qualquer um
-			}
-			
-			//se tiver a grana e a estacao n tiver dono
-			if (jogador1.getDinheiro()>estacao.getPreco() && estacao.getId() == 0) {
-				jogador1.addDinheiro(-estacao.getPreco()); //debita
-				estacao.setDono(jogador1); //registra o dono
-			}
-			//System.out.println(jogador1.toString() + "\n");
-			//System.out.println(estacao.toString());
-			
-			/*jogador2 vai comprar a propriedade, a estacao do jogador1, o servicoPublico e a propriedade
-			  pq a LEV ta pagando*/
-			jogador2.addDinheiro(9999999);
-			if (jogador2.getDinheiro()>(estacao.getPreco() + propriedade.getPreco() 
-									  + terreno.getPreco() + servicoPublico.getPreco())) {
-				//adquirindo do jogador1
-				//provavelmente farei um metodo pra esse tipo de coisa no futuro
-				jogador1.addDinheiro(estacao.getPreco() + 100000); 
-				jogador2.addDinheiro(-(estacao.getPreco() + 100000));
-				
-				estacao.setDono(jogador2); //no futuro pretendo colocar a parte do dinheiro aqui tbm e fzr um metodo de compra
-				
-				//adquirindo o resto
-				
-				jogador2.addDinheiro(-terreno.getPreco()); //debita
-				terreno.setDono(jogador2); //registra o dono
-					
-				jogador2.addDinheiro(-servicoPublico.getPreco()); //debita
-				servicoPublico.setDono(jogador2); //registra o dono
-				
-				jogador2.addDinheiro(-propriedade.getPreco()); //debita
-				propriedade.setDono(jogador2); //registra o id
-				
-				/*obs: claramente ta muito repetitivo, mas eu só to testando aqui, em labs sequentes
-					   provavelmente vão ter métodos para compra e venda*/
-			}
-			
-			//testes de remove:
-			//jogador1 deu ragequit
-			tabuleiro.rmvJogador(jogador1);
-			
-			//Mojo Dojo Casa House confiscada
-			tabuleiro.rmvPropriedade(propriedade);
-			
-			//comprando casas:
-			if(jogador2.getId() == terreno.getId()) {
-				if (terreno.comprarCasa(jogador2, 1)) {
-					System.out.println("cassa(s) comprada(s)");
-				} else System.out.println("cassa(s) não comprada(s)");
-			} 
-			
-			if(jogador2.getId() == terreno.getId()) {
-				if (terreno.comprarCasa(jogador2, 3)) {
-					System.out.println("cassa(s) comprada(s)");
-				} else System.out.println("cassa(s) não comprada(s)");
-			}
-			
-			//comprando hotel
-			if (jogador2.getId() == terreno.getId()) {
-				if (terreno.comprarHotel(jogador2)) {
-					System.out.println("hotel comprado");
-				} else System.out.println("hotel não comprado");
-			}
-			
-			System.out.println("---Teste de Tabuleiro---");
-			System.out.println("Numero de jogadores atuais: " + tabuleiro.getNumeroJogadores());
-			System.out.println(tabuleiro.getJogadores().toString() + "\n");
-			System.out.println("Numero de propriedades em jogo : " + tabuleiro.getNumeroPropriedades());
-			System.out.println(tabuleiro.getPropriedades().toString() + "\n");
-			
-			System.out.println("O exemplo automático foi concluído, deseja verificar algum status? Sim/Não");
-			String resposta = scanner.nextLine();
-			if (resposta.equals("Sim")) {
-				System.out.println("digite a opção desejada: " + "\n");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Escolha o modo de jogo (apenas o numero): \n1.Automatico \n2.Manual");
 
-			while(true) {
-				System.out.println("| Jogadores | Propriedades | Sair |");
-				String comando = scanner.nextLine();
-				if (comando.equals("Sair")) {
-					System.out.println("Fim da simulação.");
-					break;
-				} else if (comando.equals("Jogadores")) {
-					tabuleiro.printJogadores();
-					System.out.println("Gostaria de averiguar algum jogador específico? Sim/Todos");
-					comando = scanner.nextLine();
-					if (comando.equals("Sim")) {
-						System.out.println("Digite a posição em que o jogador apareceu no terminal.");
-						String posicao = scanner.nextLine();
-						int posicaoInt = Integer.parseInt(posicao);
-						System.out.println("Oque deseja saber?");
-						while(true) {
-							System.out.println("| nome | dinheiro | id | cpf | foto | email | cartas | peca | tudo | nada mais |");
-							comando = scanner.nextLine();
-							if (comando.equals("nada mais")) break;
-							else if (comando.equals("nome")) System.out.println(tabuleiro.getJogadores().get(posicaoInt-1).getNome());
-							else if (comando.equals("dinheiro")) System.out.println(tabuleiro.getJogadores().get(posicaoInt-1).getDinheiro());
-							else if (comando.equals("id")) System.out.println(tabuleiro.getJogadores().get(posicaoInt-1).getId());
-							else if (comando.equals("cpf")) System.out.println(tabuleiro.getJogadores().get(posicaoInt-1).getCpf());
-							else if (comando.equals("foto")) System.out.println(tabuleiro.getJogadores().get(posicaoInt-1).getDinheiro());
-							else if (comando.equals("email")) System.out.println(tabuleiro.getJogadores().get(posicaoInt-1).getEmail());
-							else if (comando.equals("cartas")) System.out.println(tabuleiro.getJogadores().get(posicaoInt-1).getCartas().toString());
-							else if (comando.equals("peca")) System.out.println(tabuleiro.getJogadores().get(posicaoInt-1).getPeca().toString());
-							else if (comando.equals("tudo")) System.out.println(tabuleiro.getJogadores().get(posicaoInt-1).toString());
-						}
-						
-						
-					} else {
-						System.out.println("Numero de jogadores atuais: " + tabuleiro.getNumeroJogadores());
-						System.out.println(tabuleiro.getJogadores().toString() + "\n");
-					}
-				} else {//Propriedades
-					tabuleiro.printPropriedades();
-					System.out.println("Gostaria de averiguar alguma propriedade específica? Sim/Todas");
-					comando = scanner.nextLine();
-					if (comando.equals("Sim")) {
-						System.out.println("Digite a posição em que a propriedade apareceu no terminal.");
-						String posicao = scanner.nextLine();
-						int posicaoInt = Integer.parseInt(posicao);
-						System.out.println(tabuleiro.getPropriedades().get(posicaoInt-1).toString());
-					} else {
-						System.out.println("Numero de propriedades atuais: " + tabuleiro.getNumeroPropriedades());
-						System.out.println(tabuleiro.getPropriedades().toString() + "\n");
-					}
-				}
-			}
-			
-			} else System.out.println("Fim da simulação.");
-			
-			
-			
-		} else  {
-			/*versão manual: aqui a ideia era fazer tudo manualmente, mas daria muito trabalho e n é o intuito desse lab ainda (eu acho).
-			  então a parte de cima (a "automatica") eh a principal. e tem interacoes com o terminal tambem*/
-			Tabuleiro tabuleiro = new Tabuleiro();
-			
-			//no futuro talvez tenham comandos para criar propriedades, mas por enquanto n ta pedindo
-			Propriedade propriedade = new Propriedade("Mojo Dojo Casa House", 3000000, "A melhor propriedadae possivel");
-			Estacao estacao = new Estacao("Liberdade", 500000, "carta de estação");
-			Terreno terreno = new Terreno("Céu Azul", 200000, 30000, 150000, "carta de terreno");
-			ServicoPublico servicoPublico = new ServicoPublico("Estação de Bombeiros", 300000, "carta de serviço público");
-			
-			tabuleiro.addPropriedade(propriedade);
-			tabuleiro.addPropriedade(estacao);
-			tabuleiro.addPropriedade(terreno);
-			tabuleiro.addPropriedade(servicoPublico);
+        int tipo = 0;
+        while (true) {
+            try {
+                tipo = scanner.nextInt();
+                scanner.nextLine(); // Consumir a quebra de linha
+                break; // Sai do loop se a entrada for válida
+            } catch (InputMismatchException e) {
+                System.err.println("Entrada inválida. Por favor, insira um número.");
+                scanner.nextLine(); // Consumir a entrada inválida
+            }
+        }
 
-			//parte dos comandos
-			while(true) {
-				System.out.println("digite o comando");
-				String comando = scanner.nextLine();
-				if (comando.equals("parar")) {
-					System.out.println("Fim da simulação.");
-					break;
-				} else if (comando.equals("adicionar jogador")) {
-					System.out.println("insira os dados no formato: nome, cpf, email, foto, cor");
-					String dados = scanner.nextLine();
-					String[] partes = dados.split(", ");
-					tabuleiro.addJogador(new Jogador(partes[0], partes[1], partes[2], partes[3], partes[4]));
-					
-				} else if (comando.equals("comprar terreno")) {
-					if (tabuleiro.getJogadores().get(0).getDinheiro() > terreno.getPreco()) {
-						tabuleiro.getJogadores().get(0).addDinheiro(-terreno.getPreco());
-						terreno.setDono(tabuleiro.getJogadores().get(0));
-						System.out.println("terreno comprado");
-					} else System.out.println("terreno não comprado");
-					
-				} else if (comando.equals("comprar casa")) {
-					if (terreno.comprarCasa(tabuleiro.getJogadores().get(0), 1)) {
-						System.out.println("casa comprado");
+        while (true) {
+            if (tipo == 1) {
+                // Adiciona 2 jogadores para teste
+                tabuleiro.addJogador(new Jogador("Fernando", "801.754.450-28", "nokifa2208@ikumaru.com", "https://instagram/foto.com", "preto"));
+                tabuleiro.addJogador(new Jogador("Eric", "469.369.169-96", "aspas@prodigy-agency.gg", "https://youtu.be/dQw4w9WgXcQ?si=IQWm2jD_LDtZae7w", "azul"));
+                break;
+            } else if (tipo == 2) {
+                while (true) {
+                    System.out.println("Digite o comando (apenas o numero): \n1.Adicionar jogador \n2.Parar");
+                    int comando = 0;
+                    try {
+                        comando = scanner.nextInt();
+                        scanner.nextLine(); // Consumir a quebra de linha
+                    } catch (InputMismatchException e) {
+                        System.err.println("Entrada inválida. Por favor, insira um número.");
+                        scanner.nextLine(); // Consumir a entrada inválida
+                        continue;
+                    }
 
-					} else System.out.println("casa não comprada");
-				
-			}
-			
-		}
-		}
-		scanner.close();
-		
-		
-	}
-	
+                    if (comando == 2) {
+                        System.out.println("Fim das configurações.");
+                        break;
+                    } else if (comando == 1) {
+                        System.out.println("Insira os dados no formato: nome, cpf, email, foto, cor");
+                        String dados = scanner.nextLine();
+                        String[] partes = dados.split(", ");
+
+                        while (partes.length < 5 || !Biblioteca.validaCPF(partes[1])) {
+                            System.out.println("CPF inválido, digite um novo cpf.");
+                            partes[1] = scanner.nextLine();
+                        }
+                        System.out.println("CPF válido.");
+
+                        while (!Biblioteca.validaEmail(partes[2])) {
+                            System.out.println("Email inválido, digite um novo email.");
+                            partes[2] = scanner.nextLine();
+                        }
+                        System.out.println("Email válido.");
+
+                        tabuleiro.addJogador(new Jogador(partes[0], partes[1], partes[2], partes[3], partes[4]));
+                    }
+                }
+                break;
+            } else {
+                System.out.println("Comando inválido, digite apenas o número 1 ou o número 2.");
+            }
+        }
+
+        // Começa o jogo
+        while (true) {
+            if (tabuleiro.getNumeroJogadores() == 1) {
+            	System.out.println("Jogador " + tabuleiro.getJogadores().get(0).getNome() + " venceu!!!");
+            	tabuleiro.salvaLog("Jogador " + tabuleiro.getJogadores().get(0).getNome() + " venceu!!!");
+                break;
+            }
+
+            for (int i = 0; i < tabuleiro.getNumeroJogadores(); i++) {
+                Jogador jogador = tabuleiro.getJogadores().get(i);
+                System.out.println("Turno de " + jogador.getNome());
+
+                int dado = tabuleiro.girarDado();
+                System.out.println("Tirou " + dado + " nos dados!");
+                jogador.getPeca().move(dado);
+                tabuleiro.salvaLog("Jogador" + jogador.getId() + " andou " + dado);
+
+                int posicao = jogador.getPeca().getPosicao();
+                if (posicao >= 30) {
+                    posicao -= 30;
+                    jogador.getPeca().setPosicao(posicao);
+                }
+
+                Carta casa = tabuleiro.getCasas().get(posicao);
+
+                if (casa != null) {
+                    Propriedade propriedade = (Propriedade) casa;
+                    tabuleiro.salvaLog("Jogador" + (i + 1) + " está na propriedade " + propriedade.getNome());
+
+                    if (propriedade.getDono() != null) {
+                        if (propriedade.getDono() == jogador) {
+                            System.out.println("Propriedade já pertence ao jogador.");
+                            if (propriedade.getTipo() == TipoCarta.TERRENO) {
+                                Terreno terreno = (Terreno) propriedade;
+                                if (terreno.getNumeroCasas() < 4 && !terreno.getHotel()) {
+                                    System.out.println("Está na propriedade " + propriedade.getNome() + ", deseja comprar uma casa? Digite \n1.Sim \n2.Não.");
+                                    if (tabuleiro.comprar()) {
+                                        try {
+                                            terreno.comprarCasa(jogador);
+                                            tabuleiro.salvaLog("Jogador" + (i + 1) + " comprou uma casa.");
+                                        } catch (SaldoNegativo e) {
+                                            System.err.println("Erro ao comprar casa: " + e.getMessage());
+                                        }
+                                    }
+                                } else if (terreno.getNumeroCasas() == 4 && !terreno.getHotel()) {
+                                    System.out.println("Está na propriedade " + propriedade.getNome() + ", deseja comprar um hotel? Digite \n1.Sim \n2.Não.");
+                                    if (tabuleiro.comprar()) {
+                                        try {
+                                            terreno.comprarHotel(jogador);
+                                            tabuleiro.salvaLog("Jogador" + (i + 1) + " comprou um hotel.");
+                                        } catch (SaldoNegativo e) {
+                                            System.err.println("Erro ao comprar hotel: " + e.getMessage());
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            tabuleiro.pagarAluguel(jogador, propriedade, dado);
+                        }
+                    } else if (!(propriedade.getNome().equals("Inicio"))){
+                        System.out.println("Está na propriedade " + propriedade.getNome() + ", deseja comprá-la? Digite \n1.Sim \n2.Não.");
+                        if (tabuleiro.comprar()) tabuleiro.comprarPropriedade(jogador, propriedade);
+                    }
+                } else {
+                    tabuleiro.distribuirCartas(jogador);
+                }
+
+                System.out.println("A rodada foi concluída, deseja verificar algum status? Digite \n1.Sim \n2.Não.");
+                //int resposta = 0;
+                
+                /*while (true) {
+                    try {
+                        resposta = scanner.nextInt();
+                        scanner.nextLine(); // Consumir a quebra de linha
+                        break;
+                    } catch (InputMismatchException e) {
+                        System.err.println("Entrada inválida. Por favor, insira um número.");
+                        scanner.nextLine(); // Consumir a entrada inválida
+                    }
+                }*/
+                int resposta = scanner.nextInt();
+
+                //scanner.nextLine(); // Consumir a quebra de linha
+
+               
+
+                if (resposta == 1) {
+                    while (true) {
+                        System.out.println("Digite o número da opção desejada: \n1.Jogadores \n2.Propriedades \n3.Sair");
+                        int comando = 0;
+                        try {
+                            comando = scanner.nextInt();
+                            scanner.nextLine(); // Consumir a quebra de linha
+                        } catch (InputMismatchException e) {
+                            System.err.println("Entrada inválida. Por favor, insira um número.");
+                            scanner.nextLine(); // Consumir a entrada inválida
+                            continue;
+                        }
+
+                        if (comando == 3) {
+                            break;
+                        } else if (comando == 1) {
+                            
+                            System.out.println("Gostaria de averiguar algum jogador específico? Digite \n1.Sim \n2.Não.");
+
+                            int opcaoJogador = 0;
+                            try {
+                                opcaoJogador = scanner.nextInt();
+                                scanner.nextLine(); // Consumir a quebra de linha
+                            } catch (InputMismatchException e) {
+                                System.err.println("Entrada inválida. Por favor, insira um número.");
+                                scanner.nextLine(); // Consumir a entrada inválida
+                                continue;
+                            }
+
+                            if (opcaoJogador == 1) {
+                                System.out.println("Digite o número referente à ordem em que o jogador apareceu no terminal.");
+                                tabuleiro.printJogadores();
+                                int posicaoJogador = 0;
+                                try {
+                                    posicaoJogador = scanner.nextInt();
+                                    scanner.nextLine(); // Consumir a quebra de linha
+                                } catch (InputMismatchException e) {
+                                    System.err.println("Entrada inválida. Por favor, insira um número.");
+                                    scanner.nextLine(); // Consumir a entrada inválida
+                                    continue;
+                                }
+                                
+
+                                while (true) {
+                                	System.out.println("Digite o número do que deseja saber: \n1.Nome \n2.Dinheiro \n3.ID \n4.CPF \n5.Foto \n6.Email \n7.Cartas \n8.Peça \n9.Tudo \n10.Nada mais");
+                                    int opcaoDetalhe = 0;
+                                    try {
+                                        opcaoDetalhe = scanner.nextInt();
+                                        scanner.nextLine(); // Consumir a quebra de linha
+                                    } catch (InputMismatchException e) {
+                                        System.err.println("Entrada inválida. Por favor, insira um número.");
+                                        scanner.nextLine(); // Consumir a entrada inválida
+                                        continue;
+                                    }
+
+                                    if (opcaoDetalhe == 10) break;
+                                    else if (opcaoDetalhe == 1) System.out.println(tabuleiro.getJogadores().get(posicaoJogador - 1).getNome());
+                                    else if (opcaoDetalhe == 2) System.out.println(tabuleiro.getJogadores().get(posicaoJogador - 1).getDinheiro());
+                                    else if (opcaoDetalhe == 3) System.out.println(tabuleiro.getJogadores().get(posicaoJogador - 1).getId());
+                                    else if (opcaoDetalhe == 4) System.out.println(tabuleiro.getJogadores().get(posicaoJogador - 1).getCpf());
+                                    else if (opcaoDetalhe == 5) System.out.println(tabuleiro.getJogadores().get(posicaoJogador - 1).getFoto());
+                                    else if (opcaoDetalhe == 6) System.out.println(tabuleiro.getJogadores().get(posicaoJogador - 1).getEmail());
+                                    else if (opcaoDetalhe == 7) System.out.println(tabuleiro.getJogadores().get(posicaoJogador - 1).getCartas().toString());
+                                    else if (opcaoDetalhe == 8) System.out.println(tabuleiro.getJogadores().get(posicaoJogador - 1).getPeca().toString());
+                                    else if (opcaoDetalhe == 9) System.out.println(tabuleiro.getJogadores().get(posicaoJogador - 1).toString());
+                                    else System.out.println("Comando inválido, digite um número de 1 até 10.");
+                                }
+                            } else if (opcaoJogador == 2) {
+                                System.out.println("Número de jogadores atuais: " + tabuleiro.getNumeroJogadores());
+                                System.out.println(tabuleiro.getJogadores().toString() + "\n");
+                            } else {
+                                System.out.println("Comando inválido, digite apenas 1 ou 2.");
+                            }
+                        } else if (comando == 2) {
+                            tabuleiro.printPropriedades();
+                            System.out.println("Gostaria de averiguar alguma propriedade específica? Digite \n1.Sim \n2.Não.");
+
+                            int opcaoPropriedade = 0;
+                            try {
+                                opcaoPropriedade = scanner.nextInt();
+                                scanner.nextLine(); // Consumir a quebra de linha
+                            } catch (InputMismatchException e) {
+                                System.err.println("Entrada inválida. Por favor, insira um número.");
+                                scanner.nextLine(); // Consumir a entrada inválida
+                                continue;
+                            }
+
+                            if (opcaoPropriedade == 1) {
+                                System.out.println("Digite a posição em que a propriedade apareceu no terminal.");
+                                int posicaoPropriedade = 0;
+                                try {
+                                    posicaoPropriedade = scanner.nextInt();
+                                    scanner.nextLine(); // Consumir a quebra de linha
+                                } catch (InputMismatchException e) {
+                                    System.err.println("Entrada inválida. Por favor, insira um número.");
+                                    scanner.nextLine(); // Consumir a entrada inválida
+                                    continue;
+                                }
+                                System.out.println(tabuleiro.getPropriedades().get(posicaoPropriedade - 1).toString());
+                            } else if (opcaoPropriedade == 2) {
+                                System.out.println("Número de propriedades atuais: " + tabuleiro.getNumeroPropriedades());
+                                System.out.println(tabuleiro.getPropriedades().toString() + "\n");
+                            } else {
+                                System.out.println("Comando inválido, digite apenas 1 ou 2.");
+                            }
+                        } else {
+                            System.out.println("Comando inválido, digite um número de 1 até 3.");
+                        }
+                    }
+                } else if (resposta == 2) {
+                    
+                } else {
+                    System.out.println("Comando inválido, digite apenas 1 ou 2.");
+                }
+
+                if (jogador.getDinheiro() <= 0) {
+                	tabuleiro.salvaLog("Jogador" + jogador.getId() + " faliu e foi removido do jogo.");
+                	System.out.println("Jogador" + jogador.getId() + ", " + jogador.getNome() + " faliu e foi removido do jogo.");
+                    tabuleiro.rmvJogador(jogador);
+                }
+            System.out.println("Fim do turno.");
+            System.out.println();
+            }
+
+            
+        }
+
+        scanner.close();
+    }
 }

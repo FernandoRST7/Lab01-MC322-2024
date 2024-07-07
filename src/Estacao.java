@@ -1,15 +1,22 @@
 public class Estacao extends Propriedade {
+	private int tarifa;
 	
-	public Estacao(String nome, int preco, String descricao) {
+	//construtores
+	public Estacao(String nome, int preco, String descricao, int tarifa) {
 		super(nome, preco, descricao);
+		this.tarifa = tarifa;
+		this.tipo = TipoCarta.ESTACAO;
 	}
 	
-	public Estacao(String nome, int preco, String descricao, Jogador jogador) {
+	public Estacao(String nome, int preco, String descricao, Jogador jogador, int tarifa) {
 		super(nome, preco, descricao, jogador);
+		this.tarifa = tarifa;
+		this.tipo = TipoCarta.ESTACAO;
 	}
 	
+	//metodos
 	public int calcularAluguel() {
-		return this.getPreco()*5/100; //5% do valor, to chutamdo q a estação vale mais
+		return tarifa*10; //5% do valor, to chutamdo q a estação vale mais
 	}
 	
 	@Override

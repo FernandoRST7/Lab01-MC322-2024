@@ -21,6 +21,10 @@ public class Peca {
 		this.posicao = posicao;
 	}
 	
+	public void move(int movimento) {
+		this.posicao += movimento;
+	}
+	
 	//getter
 	public String getCor() {
 		return cor;

@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.List;
+//import java.util.List;
 
 public class Jogador {
 	private String nome;
@@ -23,7 +23,7 @@ public class Jogador {
 		id_count++;
 		this.id = id_count;
 		this.cartas = new ArrayList<Carta>();
-		this.peca = new Peca(cor);;
+		this.peca = new Peca(cor);
 		}
 	
 	 // Getters e setters
@@ -116,6 +116,7 @@ public class Jogador {
 	
 	public void removeCarta(Carta carta) {
 		this.cartas.remove(carta);
+		this.cartas.trimToSize();		
 		//se der problema futuramente sobrescrever o metodo equals(Object o) de Carta ou mudar para indices
 	}
 }

@@ -2,18 +2,18 @@ public class CartaSorte extends Carta {
 	private String nome;
 	private int movimento; //0 se não movimentar;
 	private int efeito; //-1:neg, 0:neu, 1:pos;
-	private float valor; //valor>0: recebimento, valor<0: pagamento;
+	private int valor; //valor>0: recebimento, valor<0: pagamento;
 	private String acao; //descreve a ação; (tava como acaoEspecifica
-	private boolean tempo; //true usa false não, no pdf fala pra colocar int, mas acho boolean melhor, tmj (tava como usoImediato)
+	private boolean tempo; //true usa, false não, no pdf fala pra colocar int, mas acho boolean melhor, tmj (tava como usoImediato)
 	private String restricao; //descreve: (tava como usoEspecifico antes)
 	/*as strings de especificidade com explicação em texto ainda
 	 * preciso pensar melhor se vai ser texto msm, pq parece
 	 * um tanto impratico*/
 	
 	//Construtor
-	public CartaSorte (String nome, int movimento, int efeito, float valor, String acao, 
-						boolean tempo, String restricao, String descricao) {
-		super(descricao);
+	public CartaSorte (String nome, int movimento, int efeito, int valor, String acao, 
+						boolean tempo, String restricao, String descricao, TipoCarta tipo) {
+		super(descricao, tipo);
 		this.nome = nome;
 		this.movimento = movimento;
 		this.efeito = efeito;
@@ -24,10 +24,10 @@ public class CartaSorte extends Carta {
 	}
 	
 	//Construtor
-		public CartaSorte (String nome, int movimento, int efeito, float valor, String acao, 
+		public CartaSorte (String nome, int movimento, int efeito, int valor, String acao, 
 							boolean tempo, String restricao,
-							String descricao, Jogador jogador) {
-			super(descricao, jogador);
+							String descricao, Jogador jogador, TipoCarta tipo) {
+			super(descricao, jogador, tipo);
 			this.nome = nome;
 			this.movimento = movimento;
 			this.efeito = efeito;
@@ -72,7 +72,7 @@ public class CartaSorte extends Carta {
 		return valor;
 	}
 	
-	public void setValor(float valor) {
+	public void setValor(int valor) {
 		this.valor = valor;
 	}
 	
@@ -98,6 +98,19 @@ public class CartaSorte extends Carta {
 	
 	public void setRestricao(String restricao) {
 		this.restricao = restricao;
+	}
+	
+	public void executaAcao(Jogador jogador) { //executa a ação da carta no jogador
+		if (tempo) { //se for de uso instantâneo
+			System.out.println(this.nome + ": " + this.acao); //fala oq a carta faz
+			System.out.println(this.descricao); //da a descricao
+			jogador.addDinheiro(this.valor*(efeito)); //altera o credito
+			jogador.getPeca().move(movimento); //anda
+		} else { //se n for de uso instanteneo
+			jogador.addCarta(this); 
+			//adiciona a carta no inventario do jogador pra ele usar qnd quiser
+		}
+		
 	}
 	
 	@Override

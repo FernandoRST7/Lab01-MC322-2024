@@ -1,15 +1,18 @@
 public class ServicoPublico extends Propriedade {
+	//private int multiplicador;
 	
 	ServicoPublico(String nome, int preco, String descricao) {
 		super(nome, preco, descricao);
+		this.tipo = TipoCarta.SERVICOPUBLICO;
 	}
 	
 	ServicoPublico(String nome, int preco, String descricao, Jogador jogador) {
 		super(nome, preco, descricao, jogador);
+		this.tipo = TipoCarta.SERVICOPUBLICO;
 	}
 	
-	public int calcularAluguel(int dado) {
-		return this.getPreco()*5/100*dado; /*5% do valor multiplicado pelo dado tirado pra chegar ali 
+	public int calcularAluguel(int multiplicador) {
+		return this.getPreco()*5/100*multiplicador; /*5% do valor multiplicado pelo dado tirado pra chegar ali 
 												em vez de ter caracteristicas muito especificas*/
 	}
 	
